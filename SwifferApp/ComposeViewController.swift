@@ -12,10 +12,16 @@ class ComposeViewController: UIViewController {
 
     @IBOutlet var sweetTextView: UITextView!
     @IBOutlet var charRemainingLabel: UILabel!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        sweetTextView.layer.borderColor = UIColor.blackColor().CGColor
+        sweetTextView.layer.borderWidth = 0.5
+        sweetTextView.layer.cornerRadius = 5
+        
+        sweetTextView.becomeFirstResponder()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -28,6 +34,15 @@ class ComposeViewController: UIViewController {
     }
     
     @IBAction func sendSweet(sender: AnyObject) {
+        
+        var sweet:PFObject = PFObject(className: "Sweets")
+        sweet["content"] = sweetTextView.text
+        sweet["sweeter"] = PFUser.currentUser()
+        
+        sweet.save()
+        
+        self.navigationController?.popToRootViewControllerAnimated(true)
+        
     }
 
     /*

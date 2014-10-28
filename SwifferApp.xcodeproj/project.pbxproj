@@ -65,7 +65,7 @@
 		274A3C7319FE9FD700DCBB45 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		274A3C7619FEA09D00DCBB45 /* SwifferApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SwifferApp-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		274A3C7919FEC0F100DCBB45 /* TimeLineViewControllerTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLineViewControllerTableViewController.swift; sourceTree = "<group>"; };
-		274A3C7B19FEC16000DCBB45 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
+		274A3C7B19FEC16000DCBB45 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		274A3C7D19FEC8A500DCBB45 /* SweetTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SweetTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,8 +122,8 @@
 			isa = PBXGroup;
 			children = (
 				274A3C3D19FE9EB300DCBB45 /* AppDelegate.swift */,
-				274A3C7B19FEC16000DCBB45 /* ComposeViewController.swift */,
 				274A3C7919FEC0F100DCBB45 /* TimeLineViewControllerTableViewController.swift */,
+				274A3C7B19FEC16000DCBB45 /* ComposeViewController.swift */,
 				274A3C7D19FEC8A500DCBB45 /* SweetTableViewCell.swift */,
 				274A3C7619FEA09D00DCBB45 /* SwifferApp-Bridging-Header.h */,
 				274A3C3F19FE9EB300DCBB45 /* ViewController.swift */,
