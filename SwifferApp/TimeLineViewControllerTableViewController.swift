@@ -10,8 +10,47 @@ import UIKit
 
 class TimeLineViewControllerTableViewController: UITableViewController {
 
+    var timelineData:NSMutableArray! = NSMutableArray()
+    
+    @IBAction func loadData(){
+//        var user = PFUser.currentUser()
+//        var relation = user.relationForKey("Sweets")
+//        var results : NSArray = NSArray()
+
+        
+        timelineData.removeAllObjects()
+
+        var findTimelineData:PFQuery = PFQuery(className: "Sweets")
+        
+        findTimelineData.findObjectsInBackgroundWithBlock({
+            (objects:[AnyObject]!, error:NSError!)->Void in
+            
+            if error == nil{
+                for object in objects{
+                    let sweet:PFObject = object as PFObject
+                    self.timelineData.addObject(sweet)
+                }
+                
+                NSLog("timelineData count is %i ", self.timelineData.count)
+                
+                let array:NSArray = self.timelineData.reverseObjectEnumerator().allObjects
+                self.timelineData = NSMutableArray(array: array)
+                
+                
+                self.tableView.reloadData()
+
+            } else{
+                NSLog("error " + error.localizedDescription)
+            }
+            
+        })
+        
+        
+    }
     
     override func viewDidAppear(animated: Bool) {
+        self.loadData()
+        
         if(PFUser.currentUser() == nil){
             var loginAlert:UIAlertController = UIAlertController(title: "Sign up / Login", message: "Please sign up or login", preferredStyle: UIAlertControllerStyle.Alert)
             
@@ -109,25 +148,66 @@ class TimeLineViewControllerTableViewController: UITableViewController {
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Potentially incomplete method implementation.
         // Return the number of sections.
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return 0
+        //println("Cantidad de timeline data es ", timelineData.count)
+        return timelineData.count
     }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
+    
+   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell:SweetTableViewCell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as SweetTableViewCell
+    
+    
+    let sweet:PFObject = self.timelineData.objectAtIndex(indexPath.row) as PFObject
 
-        // Configure the cell...
+    cell.sweetTextView.alpha = 0
+    cell.timestampLabel.alpha = 0
+    cell.usernameLabel.alpha = 0
+    
+    cell.sweetTextView?.text = sweet.objectForKey("content") as? String
+    
+    var dataFormatter:NSDateFormatter = NSDateFormatter()
+    dataFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+    cell.timestampLabel.text = dataFormatter.stringFromDate(sweet.createdAt)
+    
+    var findSweeter:PFQuery = PFUser.query()
+    findSweeter.whereKey("objectId", equalTo: sweet.objectForKey("sweeter").objectId)
+    findSweeter.findObjectsInBackgroundWithBlock({
+        (objects:[AnyObject]!, error:NSError!)->Void in
+        
+        if error == nil{
+            let user:PFUser = (objects as NSArray).lastObject as PFUser
+            cell.usernameLabel.text = user.username
+            
+            UIView.animateWithDuration(0.5, animations: {
+                cell.sweetTextView.alpha = 1
+                cell.timestampLabel.alpha = 1
+                cell.usernameLabel.alpha = 1
+                
+            })
+            
+        } else{
+            NSLog("error " + error.localizedDescription)
+        }
+    
+    })
 
         return cell
     }
-    */
-
+    
+//    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+//        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as UITableViewCell
+//        
+//        let sweet: PFObject = self.timelineData.objectAtIndex(indexPath.row) as PFObject
+//        
+//        return cell
+//    }
+    
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {

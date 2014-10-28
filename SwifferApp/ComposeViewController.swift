@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ComposeViewController: UIViewController {
+class ComposeViewController: UIViewController, UITextViewDelegate {
 
     @IBOutlet var sweetTextView: UITextView!
     @IBOutlet var charRemainingLabel: UILabel!
@@ -20,6 +20,7 @@ class ComposeViewController: UIViewController {
         sweetTextView.layer.borderColor = UIColor.blackColor().CGColor
         sweetTextView.layer.borderWidth = 0.5
         sweetTextView.layer.cornerRadius = 5
+        sweetTextView.delegate = self
         
         sweetTextView.becomeFirstResponder()
     }
@@ -43,6 +44,19 @@ class ComposeViewController: UIViewController {
         
         self.navigationController?.popToRootViewControllerAnimated(true)
         
+    }
+    
+    func textView(textView: UITextView,
+        shouldChangeTextInRange range: NSRange,
+        replacementText text: String) -> Bool{
+            
+            var newLenght:Int = (textView.text as NSString).length + (text as NSString).length - range.length
+            var remainingCharacter:Int = 140 - newLenght
+            
+            charRemainingLabel.text = "\(remainingCharacter)"
+            
+            return (newLenght > 140) ? false : true
+            
     }
 
     /*
