@@ -21,6 +21,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate {
         sweetTextView.layer.borderWidth = 0.5
         sweetTextView.layer.cornerRadius = 5
         sweetTextView.delegate = self
+        charRemainingLabel.text = "140"
         
         sweetTextView.becomeFirstResponder()
     }

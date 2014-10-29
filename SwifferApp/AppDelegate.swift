@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UINavigationBar.appearance().barTintColor = UIColor.orangeColor()
         UINavigationBar.appearance().tintColor = UIColor.whiteColor()
         
-
         Parse.setApplicationId("TiZZ6GEiNtqDFNZS40nlV0sxNFEAbGUMG2Pm4wHD", clientKey: "9vef0spazn3FfyC6hfICJouMd8xNaYs70LMwpkK7")
                
         return true
